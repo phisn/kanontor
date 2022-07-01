@@ -2,6 +2,7 @@ package com.schmisn
 
 import com.schmisn.api.Api
 import com.schmisn.api.ChatApi
+import com.schmisn.services.ChatService
 import dagger.Binds
 import dagger.BindsInstance
 import dagger.Component
@@ -16,25 +17,14 @@ import io.ktor.server.locations.post
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
+import org.slf4j.Logger
 import java.time.Duration
 import javax.inject.Inject
 import javax.inject.Singleton
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
-        install(Locations) { }
-
-        install(WebSockets) {
-            contentConverter = GsonWebsocketContentConverter()
-            pingPeriod = Duration.ofSeconds(15)
-            timeout = Duration.ofSeconds(15)
-            maxFrameSize = Long.MAX_VALUE
-            masking = false
-        }
-
-        install(ContentNegotiation) {
-            gson()
-        }
+        installCommon()
 
         val component = DaggerApplicationComponent
             .builder()
@@ -45,12 +35,31 @@ fun main() {
     }.start(wait = true)
 }
 
+fun Application.installCommon() {
+    install(Locations) { }
+
+    install(WebSockets) {
+        contentConverter = GsonWebsocketContentConverter()
+        pingPeriod = Duration.ofSeconds(15)
+        timeout = Duration.ofSeconds(15)
+        maxFrameSize = Long.MAX_VALUE
+        masking = false
+    }
+
+    install(ContentNegotiation) {
+        gson()
+    }
+}
+
 @Singleton
 class Apis @Inject constructor(
+    private val logger: Logger,
     private val apis: Set<@JvmSuppressWildcards Api>,
     private val application: Application
 ) {
     fun register() {
+        logger.info("Registering apis")
+
         application.routing {
             apis.forEach {
                 it.apply { registerRoutes() }
@@ -72,6 +81,23 @@ interface ApplicationComponent {
         @BindsInstance
         fun application(application: Application): Builder
         fun build(): ApplicationComponent
+    }
+}
+
+@Singleton
+@Component(modules = [
+    ApplicationModule::class,
+    ApisModule::class
+])
+interface TestApplicationComponent : ApplicationComponent {
+    val chatService: ChatService
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): TestApplicationComponent
     }
 }
 

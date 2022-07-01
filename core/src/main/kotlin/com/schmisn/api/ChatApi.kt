@@ -5,6 +5,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.locations.*
 import io.ktor.server.locations.post
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
@@ -25,21 +26,25 @@ class ChatApi @Inject constructor(
     private val logger: Logger,
     private val chatService: ChatService
 ): Api {
-    @Location("/chat/message")
-    data class SendMessageRequest(val message: String)
+    data class SendMessageBody(val message: String)
 
     override fun Routing.registerRoutes() {
-        post<SendMessageRequest> {
-            chatService.sendMessage(it.message, "${call.request.local.remoteHost}:${call.request.local.port}")
+        logger.info("Registering ChatApi")
+
+        post("/chat/message") {
+            chatService.sendMessage(call.receive<SendMessageBody>().message, usernameFromApplicationCall(call))
             call.respond(HttpStatusCode.NoContent)
         }
 
         webSocket("/chat") {
-            logger.info("User '${call.request.local.remoteHost}:${call.request.local.port}' connected")
+            logger.info("User '${usernameFromApplicationCall(call)}' connected")
 
             chatService.messages.collect {
                 sendSerialized(it)
             }
         }
     }
+
+    private fun usernameFromApplicationCall(call: ApplicationCall)
+        = "${call.request.local.remoteHost}:${call.request.local.port}";
 }
