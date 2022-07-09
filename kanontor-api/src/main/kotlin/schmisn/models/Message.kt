@@ -1,4 +1,4 @@
-package schmisn.model
+package schmisn.models
 
 data class Message(
     val text: String,

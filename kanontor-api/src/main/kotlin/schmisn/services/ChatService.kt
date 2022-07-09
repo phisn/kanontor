@@ -2,7 +2,7 @@ package com.schmisn.services
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.slf4j.Logger
-import schmisn.model.Message
+import schmisn.models.Message
 
 class ChatService constructor(
     private val logger: Logger

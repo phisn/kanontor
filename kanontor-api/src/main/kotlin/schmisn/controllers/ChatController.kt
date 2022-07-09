@@ -1,4 +1,4 @@
-package schmisn.controller
+package schmisn.controllers
 
 import com.schmisn.services.ChatService
 import io.ktor.http.*
@@ -7,9 +7,8 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
-import org.koin.ktor.ext.get
 import org.slf4j.Logger
-import schmisn.model.MessageDTO
+import schmisn.models.MessageDTO
 
 class ChatController(
     val application: Application,
