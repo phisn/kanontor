@@ -1,13 +1,10 @@
 package com.schmisn.services
 
-import com.schmisn.models.Message
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.slf4j.Logger
-import javax.inject.Inject
-import javax.inject.Singleton
+import schmisn.model.Message
 
-@Singleton
-class ChatService @Inject constructor(
+class ChatService constructor(
     private val logger: Logger
 ) {
     val messages = MutableSharedFlow<Message>()
