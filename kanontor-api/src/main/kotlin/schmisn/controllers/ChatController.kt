@@ -1,14 +1,14 @@
 package schmisn.controllers
 
-import com.schmisn.services.ChatService
+import com.schmisn.services.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
-import org.slf4j.Logger
-import schmisn.models.MessageDTO
+import org.slf4j.*
+import schmisn.models.*
 
 class ChatController(
     application: Application,
@@ -40,5 +40,5 @@ class ChatController(
     }
 
     private fun usernameFromApplicationCall(call: ApplicationCall)
-            = "${call.request.local.remoteHost}:${call.request.local.port}";
+            = "${call.request.local.remoteHost}:${call.request.local.port}"
 }

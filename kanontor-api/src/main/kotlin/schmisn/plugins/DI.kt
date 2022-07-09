@@ -1,11 +1,9 @@
 package schmisn.plugins
 
 import io.ktor.server.application.*
-import org.koin.ktor.ext.getKoin
-import org.koin.ktor.plugin.Koin
-import org.koin.ktor.plugin.koin
-import org.koin.logger.slf4jLogger
-import schmisn.DI.mainModule
+import org.koin.ktor.plugin.*
+import org.koin.logger.*
+import schmisn.DI.*
 
 fun Application.configureDI() {
     log.info("register di")

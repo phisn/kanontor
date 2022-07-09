@@ -2,28 +2,13 @@ package schmisn
 
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
-import io.ktor.client.plugins.websocket.WebSockets
-import io.ktor.server.plugins.callloging.*
-import org.slf4j.event.*
-import io.ktor.server.request.*
-import io.ktor.server.routing.*
-import io.ktor.http.*
-import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.locations.*
-import io.ktor.websocket.*
-import java.time.Duration
-import io.ktor.serialization.gson.*
-import io.ktor.server.application.*
-import io.ktor.server.response.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.serialization.gson.*
 import io.ktor.server.config.*
-import kotlin.test.*
 import io.ktor.server.testing.*
-import io.ktor.server.websocket.*
-import schmisn.models.Message
-import schmisn.models.MessageDTO
-import schmisn.plugins.*
+import schmisn.models.*
+import kotlin.test.*
 
 class ApplicationTest {
     @Test

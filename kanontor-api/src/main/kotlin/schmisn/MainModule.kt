@@ -1,9 +1,9 @@
 package schmisn.DI
 
-import com.schmisn.services.ChatService
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.module
-import schmisn.controllers.ChatController
+import com.schmisn.services.*
+import org.koin.core.module.dsl.*
+import org.koin.dsl.*
+import schmisn.controllers.*
 
 val mainModule = module(createdAtStart = true) {
     singleOf(::ChatController)
