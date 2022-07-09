@@ -11,15 +11,17 @@ import org.slf4j.Logger
 import schmisn.models.MessageDTO
 
 class ChatController(
-    val application: Application,
-    val logger: Logger,
-    val chatService: ChatService
+    application: Application,
+    private val logger: Logger,
+    private val chatService: ChatService
 ) {
     init {
         application.routing { registerRoutes() }
     }
 
     private fun Routing.registerRoutes() {
+        logger.info("Register chat controller")
+
         route("chat") {
             post("message") {
                 val message = call.receive<MessageDTO>()

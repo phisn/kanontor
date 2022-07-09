@@ -1,5 +1,6 @@
 package schmisn.plugins
 
+import io.ktor.serialization.gson.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import java.time.Duration
@@ -13,5 +14,6 @@ fun Application.configureSockets() {
         timeout = Duration.ofSeconds(15)
         maxFrameSize = Long.MAX_VALUE
         masking = false
+        contentConverter = GsonWebsocketContentConverter()
     }
 }

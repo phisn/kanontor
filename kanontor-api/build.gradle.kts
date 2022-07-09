@@ -23,6 +23,10 @@ repositories {
 }
 
 dependencies {
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-client-logging:$ktor_version")
+    implementation("io.ktor:ktor-client-websockets:$ktor_version")
+
     implementation("io.insert-koin:koin-ktor:3.2.0")
     implementation("io.insert-koin:koin-logger-slf4j:3.2.0")
     testImplementation("io.insert-koin:koin-test:3.2.0")

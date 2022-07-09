@@ -7,23 +7,19 @@ import io.ktor.server.locations.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
+import schmisn.models.ErrorDTO
+
+fun Application.configureRoutingTest() {
+    install(StatusPages) {
+        exception<Exception> { call, cause ->
+            call.respond(HttpStatusCode.InternalServerError, ErrorDTO(cause.localizedMessage))
+        }
+    }
+
+    configureRouting()
+}
 
 fun Application.configureRouting() {
-    install(StatusPages) {
-        /*
-        exception<AuthenticationException> { call, cause ->
-            call.respond(HttpStatusCode.Unauthorized)
-        }
-        exception<AuthorizationException> { call, cause ->
-            call.respond(HttpStatusCode.Forbidden)
-        }
-        */
-    }
-
     install(Locations) {
-    }
-
-    routing {
-
     }
 }
