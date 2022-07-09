@@ -7,10 +7,12 @@ import io.ktor.http.*
 import io.ktor.serialization.gson.*
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
+import kotlinx.coroutines.*
 import schmisn.models.*
 import kotlin.test.*
 
 class ApplicationTest {
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testRoot() = testApplication {
         environment {
@@ -45,10 +47,11 @@ class ApplicationTest {
                 assertEquals(HttpStatusCode.NoContent, response.status)
             }
 
-
             for (i in 1..16) {
                 assertEquals(receiveDeserialized<Message>().text, "Message $i")
             }
+
+            assertTrue(incoming.isEmpty)
         }
     }
 

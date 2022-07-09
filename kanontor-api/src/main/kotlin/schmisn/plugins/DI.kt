@@ -3,7 +3,7 @@ package schmisn.plugins
 import io.ktor.server.application.*
 import org.koin.ktor.plugin.*
 import org.koin.logger.*
-import schmisn.DI.*
+import schmisn.*
 
 fun Application.configureDI() {
     log.info("register di")

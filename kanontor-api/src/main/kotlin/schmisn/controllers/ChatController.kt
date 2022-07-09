@@ -16,12 +16,11 @@ class ChatController(
     private val chatService: ChatService
 ) {
     init {
-        application.routing { registerRoutes() }
+        logger.info("Register chat controller")
+        application.routing { register() }
     }
 
-    private fun Routing.registerRoutes() {
-        logger.info("Register chat controller")
-
+    private fun Routing.register() =
         route("chat") {
             post("message") {
                 val message = call.receive<MessageDTO>()
@@ -37,7 +36,6 @@ class ChatController(
                 }
             }
         }
-    }
 
     private fun usernameFromApplicationCall(call: ApplicationCall)
             = "${call.request.local.remoteHost}:${call.request.local.port}"

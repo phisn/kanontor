@@ -1,4 +1,4 @@
-package schmisn.DI
+package schmisn
 
 import com.schmisn.services.*
 import org.koin.core.module.dsl.*
